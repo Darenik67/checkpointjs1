@@ -20,18 +20,25 @@ const ArrayofValues = [1, 'hello', function sayHi(){ console.log('hi') }, 'world
   console.log(categorize(ArrayofValues));
 
 
-function dedup(array) {
-    return array.filter((value, index) => array.indexOf(value) === index);
-}
-
-let currentArray = [1, 2, 3, 4, 5, 6, 7, 8, 9,1,5,8,3];
-
-let dedupArray = dedup(currentArray);
-
-console.log(dedup(currentArray));
 
 
+let names = ['Mike', 'Matt', 'Nancy', 'Adam', 'Jenny', 'Nancy', 'Carl']
 
+let uniq = names
+  .map((name) => {
+    return {count: 1, name: name}
+  })
+  .reduce((a, b) => {
+    a[b.name] = (a[b.name] || 0) + b.count
+    return a
+  }, {})
+
+ const dedup =
+  
+ Object.keys(uniq).sort((a, b) => uniq[a] < uniq[b])
+ 
+console.log(dedup);
+ 
 function filterObject(obj, predicate) {
 
 const filtered= {};
@@ -78,19 +85,19 @@ Promise.reject(Error('boom'));
 
 })().then(result=>console.log(result)).catch(err => console.error (err.message));
 
-var resolvedPromisesArray = [Promise.resolve(33), Promise.resolve(44)];
 
-var p = Promise.race(resolvedPromisesArray);
-// On affiche immédiatement la valeur p dans la console
-console.log(p);
 
-// Avec setTimeout on peut exécuter du code
-// une fois que la pile est vide
-setTimeout(function () {
-  console.log("La pile est désormais vide");
-  console.log(p);
+let p1 = new Promise(function(resolve, reject) { 
+  setTimeout(resolve, 500, 'one'); 
+});
+let p2 = new Promise(function(resolve, reject) { 
+  setTimeout(resolve, 100, 'two'); 
 });
 
+Promise.race([p1, p2]).then(function(value) {
+console.log(value); // "two"
+// l'element le plus rapide est affiché
+});
 
 
 function all (){
@@ -100,7 +107,7 @@ const p2 = Promise.resolve(1337);
 const p3 = new Promise((resolve, reject) => {
   setTimeout(() => {
     resolve("foo");
-  }, 100);
+  }, 2000);
 });
 
 Promise.all([p1, p2, p3]).then((values) => {
